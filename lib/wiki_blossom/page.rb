@@ -15,6 +15,10 @@ module WikiBlossom
       content.match(regex)[1]
     end
 
+    def base_name
+      File.basename(@path).chomp('.md').chomp('.textile')
+    end
+
     def content
       return @content unless @content.nil?
       @content = File.open(@path).read

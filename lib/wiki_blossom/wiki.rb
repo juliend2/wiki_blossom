@@ -1,6 +1,7 @@
 module WikiBlossom
   class Wiki
-    def initialize
+    def initialize(directory)
+      @directory = directory.chomp('/')
       @files = files()
       @pages = @files.map {|f| Page.new(f) }
     end
@@ -10,9 +11,22 @@ module WikiBlossom
       when '', '/'
         content = index
         [200, header(content), [content]]
-      when /^\/[^\/]+\/?$/ # /segment/
-        content = 'Joie'
-        [200, header(content), [content]]
+      when /^\/([^\/]+)\/?$/ # /segment/
+        slug = $1 # resulting match of the previous regex
+        status = 200
+        path_without_ext = "#{@directory}/#{slug}"
+        ext = if File.exist? "#{path_without_ext}.md" then 'md'
+              elsif File.exist? "#{path_without_ext}.textile" then 'textile'
+              else 'unknown'
+              end
+        page = Page.new "#{path_without_ext}.#{ext}"
+        content = case ext 
+                  when 'md' then RDiscount.new(page.content).to_html
+                  when 'textile' then RedCloth.new(page.content).to_html
+                  when 'unknown' then status = 404; 'Not Found'
+                  end
+        content = layout(page.name, content)
+        [status, header(content), [content]]
       else
         content = 'Not Found!'
         [404, header(content), [content]]
@@ -27,15 +41,16 @@ module WikiBlossom
     end
 
     def files
-      Dir.glob('/Users/jdesrosiers/Dropbox/perso/wiki/*').reject{|f| 
+      Dir.glob("#{@directory}/*").reject{|f| 
         File.directory?(f) 
       }
     end
 
     def index
-      layout "Index", "<ul>" << @pages.map{|p| 
-        "<li>#{p.name}</li>" 
+      body = "<ul>" << @pages.map{|p| 
+        "<li><a href='/#{p.base_name}'>#{p.name}</a></li>" 
       }.join('') << "</ul>"
+      layout "Index", body
     end
 
     def layout(title, body)
