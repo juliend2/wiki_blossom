@@ -17,6 +17,8 @@ Installation
    contains some textile (.textile) or markdown (.md) files.
 2. `$ bundle install`
 3. `$ thin start -R wiki.ru`
+4. (optional) to start your wiki on each reboot, customize and add the content of
+   etc/wiki_blossom.cron to you crontab.
 
 License
 -------
