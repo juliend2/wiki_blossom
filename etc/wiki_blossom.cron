@@ -1,0 +1,1 @@
+@reboot         source /Users/jdesrosiers/.bash_profile && cd ~/Code/Ruby/wiki_blossom/ && bundle exec thin start -R wiki.ru -p 8787
