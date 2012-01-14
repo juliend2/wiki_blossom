@@ -26,7 +26,7 @@ module WikiBlossom
                   when 'textile' then RedCloth.new(page.content).to_html
                   when 'unknown' then status = 404; 'Not Found'
                   end
-        content << "<br/><a href='txmt://open/?url=file://#{path}'>Edit in TextMate</a>"
+        content << "<br/><a href='txmt://open/?url=file://#{path}'>Edit with TextMate</a>"
         content = layout(page.name, content)
         [status, header(content), [content]]
       else
