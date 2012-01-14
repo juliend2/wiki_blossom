@@ -13,7 +13,7 @@ Features
 Installation
 ------------
 
-1. open config.yml and modify the `wiki_dir` line to point somewhere that
+1. open etc/config.yml and modify the `wiki_dir` line to point somewhere that
    contains some textile (.textile) or markdown (.md) files.
 2. `$ bundle install`
 3. `$ thin start -R wiki.ru`
