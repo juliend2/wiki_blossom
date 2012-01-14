@@ -1,7 +1,7 @@
 Wiki Blossom
 ============
 
-A cute little rack-based wiki app
+A cute little rack-based wiki
 
 Features
 --------
