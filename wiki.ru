@@ -5,7 +5,7 @@ require 'bundler'
 Bundler.require :default
 require 'yaml'
 
-config = YAML::load(File.open('config.yml'))
+config = YAML::load(File.open('etc/config.yml'))
 app = proc do |env|
   wiki = WikiBlossom::Wiki.new config['wiki_dir']
   wiki.serve env['PATH_INFO']
