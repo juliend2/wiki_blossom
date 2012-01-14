@@ -19,12 +19,14 @@ module WikiBlossom
               elsif File.exist? "#{path_without_ext}.textile" then 'textile'
               else 'unknown'
               end
-        page = Page.new "#{path_without_ext}.#{ext}"
+        path = "#{path_without_ext}.#{ext}"
+        page = Page.new path
         content = case ext 
                   when 'md' then RDiscount.new(page.content).to_html
                   when 'textile' then RedCloth.new(page.content).to_html
                   when 'unknown' then status = 404; 'Not Found'
                   end
+        content << "<br/><a href='txmt://open/?url=file://#{path}'>Edit in TextMate</a>"
         content = layout(page.name, content)
         [status, header(content), [content]]
       else
