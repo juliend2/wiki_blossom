@@ -3,6 +3,13 @@ Wiki Blossom
 
 A cute little rack-based wiki app
 
+Features
+--------
+* **Simple**: Pages are stored in flat-files on the local file system. 
+* **Loves TextMate**: Each page has a link at the bottom that says
+  "Edit in TextMate". When you click it, it opens the file in TextMate, so you
+  can modify it and reload the page after you're done.
+
 Installation
 ------------
 
